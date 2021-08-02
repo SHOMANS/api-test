@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState } from "react";
+import { Button } from "react-bootstrap";
+import axios from "axios";
 
 function App() {
+  const [data, setData] = useState({});
+  let handleClick = async () => {
+    try {
+      let languages = await axios.get(
+        `http://moos1234-001-site1.ctempurl.com//api/Language/Index`
+      );
+      setData(languages.data.items);
+      console.log(languages);
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Button className="p-5 pt-2 pb-2" onClick={handleClick}>
+        Get Data
+      </Button>
     </div>
   );
 }
